@@ -5,10 +5,15 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
+  entry: './src/index.js',
   output: {
-    //path: path.resolve(__dirname, 'test'),
-    //filename: 'index.js',
+    path: process.cwd(),
+    filename: 'build.js',
   },
+  //output: {
+  //  //path: path.resolve(__dirname, 'test'),
+  //  //filename: 'index.js',
+  //},
   module: {
     loaders: [{
       test: /\.js$/,
