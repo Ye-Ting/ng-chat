@@ -1,5 +1,7 @@
 /**
  * Created by yeting on 16/6/25.
  */
-//new Notification('hello');
-console.log('active');
+
+// for bootstrap app;
+import './index.module';
+import './chat.component';

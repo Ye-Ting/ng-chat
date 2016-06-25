@@ -1,14 +1,5 @@
 /**
  * Created by yeting on 16/6/25.
  */
-describe('the first test', () => {
-  it('the first test', () => {
-    expect(true).toBe(true);
-  })
-})
-
-describe('the first test', () => {
-  it('the first test', () => {
-    expect(true).toBe(true);
-  })
-})
+const testsContext = require.context('.', true, /spec$/);
+testsContext.keys().forEach(testsContext);
