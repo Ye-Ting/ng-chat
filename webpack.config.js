@@ -1,8 +1,6 @@
 /**
  * Created by yeting on 16/6/23.
  */
-var webpack = require('webpack');
-var path = require('path');
 
 module.exports = {
   entry: './src/index.js',
@@ -10,10 +8,6 @@ module.exports = {
     path: process.cwd(),
     filename: 'build.js',
   },
-  //output: {
-  //  //path: path.resolve(__dirname, 'test'),
-  //  //filename: 'index.js',
-  //},
   module: {
     loaders: [{
       test: /\.js$/,
@@ -38,5 +32,8 @@ module.exports = {
         prefixize: true,
       },
     }],
+  },
+  externals: {
+    angular: 'angular',
   },
 };
