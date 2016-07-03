@@ -4,8 +4,5 @@
 
 // for bootstrap app;
 import './index.module';
+import './containers/chat/chat.module';
 
-import './components/chat.component.js';
-import './components/inbox.component.js';
-import './components/conversation.component.js';
-import './components/info.component.js';

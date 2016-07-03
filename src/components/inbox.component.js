@@ -4,8 +4,7 @@
 
 const template = `
 <ul>
-  <li ng-repeat="con in vm.inbox.conversations"
-  ng-click="vm.switchConversation({conversationId:$index})">
+  <li ng-repeat="con in vm.conversations" ui-sref=".conversation({conversationId: con.id})">
     {{ con }}
   </li>
 </ul>
@@ -21,13 +20,15 @@ class controller {
 export const indexComponent = {
   bindings: {
     inbox: '<',
-    switchConversation: '&',
+    conversations: '<',
   },
   template,
   controller,
   controllerAs: 'vm',
 };
 
-
+const componentName = 'inbox';
 import { ngModule } from './../index.module.js';
-ngModule.component('inbox', indexComponent);
+ngModule.component(componentName, indexComponent);
+
+export default componentName;

@@ -5,90 +5,46 @@
 const template = `
 this is inboxes list
 <ul class="inbox">
-  <li ng-repeat="(key,value) in vm.inboxes" ng-click="vm.switchInbox(key)">
+  <li style="display: inline-block" ng-repeat="(key,value) in vm.inboxes"
+  ui-sref=".inbox({inboxId: value.id})">
     {{ key }} {{ value }}
   </li>
 </ul>
 
-<hr>
-this is conversations list
-<inbox inbox="vm.getInbox()"
-switch-conversation="vm.switchConversation(vm.currentInboxId, conversationId)"></inbox>
+<div  ui-view="inbox"></div>
 
-<hr>
-this is conversation Detail
-<conversation conversation="vm.getConversation()"></conversation>
+<div class="conversation" ui-view="conversation"></div>
 
 <hr>
 this is info panel
-<info people="vm.getPeople()"></info>
+<div ui-view="info"></div>
+
 `;
 
 class controller {
-  constructor($timeout) {
+  constructor($timeout, PeopleService, ConversationService, InboxService) {
     this.$timeout = $timeout;
-    //this.hello = '';
+    this.PeopleService = PeopleService;
+    this.ConversationService = ConversationService;
+    this.InboxService = InboxService;
 
-    this.onInit();
+    //this.onInit();
   }
 
-  onInit() {
-    this.getInboxDate()
-      .then(res => {
-        this.inboxes = res;
-      });
-  }
-
-  getInboxDate() {
-    return this.$timeout(() => ({
-      all: {
-        conversations: [
-          {
-            people: {
-              name: 'yeting1',
-            },
-            part: [
-              {
-                body: 'hello',
-              },
-              {
-                body: 'hello 2',
-              },
-            ],
-          }, {
-            people: {
-              name: 'yeting2',
-            },
-            part: [
-              {
-                body: 'hello 3',
-              },
-              {
-                body: 'hello 4',
-              },
-            ],
-          },
-        ],
-      },
-      unAssign: {
-        conversations: [
-          {
-            people: {
-              name: 'yeting3',
-            },
-            part: [
-              {
-                body: 'hello 3',
-              },
-              {
-                body: 'hello 4',
-              },
-            ],
-          },
-        ],
-      },
-    }), 100);
-  }
+  //onInit() {
+  //  this.InboxService.all()
+  //    .then(res => {
+  //      this.inboxes = res;
+  //      this.inboxes.forEach(inbox => {
+  //
+  //        this.ConversationService.searchForInbox(inbox.id)
+  //          .then(cons => {
+  //            inbox.conversations = cons;
+  //          })
+  //
+  //      })
+  //    });
+  //}
 
   switchInbox(inboxId) {
     this.currentInboxId = inboxId;
@@ -101,7 +57,7 @@ class controller {
   }
 
   getInbox() {
-    return this.currentInboxId ? this.inboxes[this.currentInboxId] : null;
+    return angular.isNumber(this.currentInboxId) ? this.inboxes[this.currentInboxId] : null;
   }
 
   getConversation() {
@@ -116,13 +72,19 @@ class controller {
 }
 
 const component = {
-  bindings: {},
+  bindings: {
+    inboxes: '<',
+  },
   template,
   controller,
   controllerAs: 'vm',
 };
 
+const componentName = 'chat';
+
 import { ngModule } from './../index.module.js';
+import './data.service';
 
-ngModule.component('chat', component);
+ngModule.component(componentName, component);
 
+export default componentName;

@@ -1,0 +1,138 @@
+.conversation {
+  background-color: #fbfcfc;
+  border: 1px solid #bf616a;
+}
+
+body {
+  line-height: 1.6;
+}
+
+pre {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre-wrap;
+  word-break: initial;
+}
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.part {
+  margin-bottom: 16px;
+
+  @include clearfix;
+
+  .content {
+    overflow: hidden; // for BFC
+  }
+  .meta {
+    color: #9ba3af;
+    opacity: .6;
+  }
+
+  // default is user
+  .avatar {
+    float: left;
+    width: 24px;
+    height: 24px;
+    img {
+      max-width: 100%;
+    }
+  }
+
+  // admin
+  &.admin {
+    text-align: right;
+    .avatar {
+      float: right;
+    }
+  }
+}
+
+$default-color: #f1f1f1;
+$primary-color: #b2e281;
+
+@mixin bubbleColor($color) {
+  background-color: $color;
+  &.left {
+    &:after {
+      border-right-color: $color;
+    }
+  }
+  &.right {
+    &:after {
+      border-left-color: $color;
+    }
+  }
+}
+
+@mixin bubbleArrow($top, $size-x, $size-y) {
+  &:before,
+  &:after {
+    position: absolute;
+    top: $top;
+    border: $size-y solid transparent;
+    content: " ";
+  }
+
+  // for bubble direction
+  &.left {
+    &:before, &:after {
+      right: 100%;
+    }
+    &:after {
+      border-right-width: $size-x;
+      border-right-style: solid;
+    }
+  }
+  &.right {
+    &:before,
+    &:after {
+      left: 100%;
+    }
+    &:after {
+      border-left-width: $size-x;
+      border-left-style: solid;
+    }
+  }
+}
+
+.bubble {
+  min-height: 1em;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  text-align: left;
+  border-radius: 3px;
+  margin: 0 10px;
+
+  @include bubbleArrow(10px, 4px, 6px);
+
+  // for bubble style
+  &-default {
+    @include bubbleColor($default-color);
+  }
+  &-primary {
+    @include bubbleColor($primary-color);
+  }
+
+  .bubble-cont {
+    word-wrap: break-word;
+    word-break: break-all;
+    min-height: 25px;
+
+    .plain {
+      padding: 9px 13px;
+    }
+
+  }
+}

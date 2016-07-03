@@ -22,5 +22,7 @@ const component = {
   controllerAs: 'vm',
 };
 
+const componentName = 'info';
 import { ngModule } from './../index.module.js';
-ngModule.component('info', component);
+ngModule.component(componentName, component);
+export default componentName;
